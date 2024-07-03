@@ -95,13 +95,13 @@ def distributeMap(map, numberOfParts):
 
 
 def generateMap():
-    while True:
-        try:
-            rules = getRules()
-            break
-        except:
-            print("Connection Failed")
-            time.sleep(60)
+    #while True:
+        #try:
+    rules = getRules()
+            #break
+        #except:
+            #print("Connection Failed")
+            #time.sleep(60)
     wave.numberOfTiles = rules["numberOfTiles"]
     wave.entropyTolerance = rules["entropyTolerance"]
     fullMap = setMap(rules["numberOfTiles"])
