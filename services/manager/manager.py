@@ -6,7 +6,7 @@ app = flask.Flask(__name__)
 numberOfTiles = (0,0)
 @app.route("/")
 def showRules():
-    return flask.jsonify({"numberOfTiles: ": numberOfTiles, "numberOfParts: ": numberOfParts, "entropyTolerance: ": entropyTolerance})
+    return flask.jsonify({"numberOfTiles: ": numberOfTiles, "numberOfParts: ": numberOfParts, "entropyTolerance: ": entropyTolerance, "numberOfWorkers: ": numberOfWorkers})
     
 @app.route("/numberOfTiles")
 def getNumberOfTiles():
@@ -19,6 +19,10 @@ def getNumberOfParts():
 @app.route("/entropyTolerance")
 def getEntropyTolerance():
     return flask.jsonify(entropyTolerance)
+    
+@app.route("/numberOfWorkers")
+def getNumberOfWorkers():
+    return flask.jsonify(numberOfWorkers)
     
 @app.route("/restrictions")
 def getRestrictions():
@@ -36,6 +40,7 @@ data = pd.read_excel("rules.xlsx", usecols="B")
 numberOfTiles = (int(data.values[0][0]),int(data.values[1][0]))
 numberOfParts = int(data.values[2][0])
 entropyTolerance = int(data.values[3][0])
+numberOfWorkers = int(data.values[4][0])
 
 
 

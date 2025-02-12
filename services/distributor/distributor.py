@@ -5,12 +5,14 @@ from flask import Flask, request, render_template, redirect
 import uuid
 import json
 import time
+from datetime import datetime
 
 
 app = Flask(__name__)
 
 huburl = "http://wfchub:5002"
 managerurl = "http://wfcmanager:5000"
+timekeeperurl = "http://timekeeper:6002"
 
 @app.route("/")
 def showHome():
@@ -23,6 +25,7 @@ def mapGenerator():
         return render_template('distributor.html')+"\n<H1>"+ mapuuid +"</H1>"
     elif request.method == 'GET':
         return render_template('distributor.html')
+    
 
 
 
@@ -32,12 +35,14 @@ def getRules():
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
+    numberOfWorkersResponse = request.get(managerurl+"/numberOfWorkers").json()
 
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
     numberOfParts = numberOfPartsResponse
     entropyTolerance = entropyToleranceResponse
+    numberOfWorkers = numberOfWorkersResponse
     
-    return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance}
+    return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
 
 
 
@@ -117,6 +122,13 @@ def generateMap():
             data.append({"mapID":mapID,"chunkID":str(uuid.uuid4()),"locX":x,"locY":y,"entropyTolerance":rules["entropyTolerance"],"content":mapChunks[y][x]})
     obj = json.dumps(data)
     result = requests.post(huburl+"/saveChunks", json=obj)
+    
+    #SEND DATA TO TIME KEEPER
+    starttime = datetime.now()
+    data = []
+    data.append({"mapID":mapID,"mapSize":rules["numberOfTiles"],"chunkCount":rules["numberOfParts"],"workerCount":rules["numberOfWorkers"],"startTime":starttime,"endTime":None,"totalDuration":None})        
+    obj = json.dumps(data)
+    result = requests.post(timekeeperurl+"/saveMapTime", json=obj)
     
     return mapID
         

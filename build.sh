@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo docker build -t imgtimedb ./services/timedb
 sudo docker build -t imgdb ./services/db
 sudo docker build -t imgmanager ./services/manager
 sudo docker build -t imgdistributor ./services/distributor
