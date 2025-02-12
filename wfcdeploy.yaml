@@ -316,4 +316,43 @@ spec:
         - containerPort: 5003
 #      imagePullSecrets:
 #        - name: dockerauth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  #annotations:
+    #service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  name: wfctimekeeper
+  labels:
+    app: wfctimekeeper
+spec:
+  type: NodePort
+  ports:
+  - port: 6002
+    name: wfctimekeeperport
+    targetPort: 6002
+    nodePort: 32002
+  selector:
+    app: wfctimekeeper
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wfctimekeeper-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wfctimekeeper
+  template:
+    metadata:
+      labels:
+        app: wfctimekeeper
+    spec:
+      containers:
+      - name: wfctimekeeper-container
+        image: pfropfen/imgtimekeeper
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6002
 
