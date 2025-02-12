@@ -20,7 +20,7 @@ channel.queue_declare(queue='maptickets', durable=True)
 
 def sendChunkTimes(mapID, chunkID, startTime, endTime, chunkDuration):
     print("Sending Times to Time Keeper...")
-    result = requests.post(timekeeperurl+"/saveChunkTime", json = json.dumps({"mapID":mapID, "chunkID":chunkID, "startTime":startTime, "endTime":endTime, "chunkDuration":chunkDuration})
+    result = requests.post(timekeeperurl+"/saveChunkTime", json = json.dumps({"mapID":mapID, "chunkID":chunkID, "startTime":startTime, "endTime":endTime, "chunkDuration":chunkDuration}))
     print("Result: ", result)
     print("") 
     print("Done")

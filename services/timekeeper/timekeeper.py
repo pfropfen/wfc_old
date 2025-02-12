@@ -1,7 +1,9 @@
 import mysql.connector
 import uuid
 import json
+import requests
 from flask import Flask, request
+from datetime import datetime
 
 
 # GLOBAL VARIABLES
