@@ -103,6 +103,8 @@ def generateMap():
     while True:
         try:
             rules = getRules()
+            print("getting rules: ", rules)
+            print("")
             break
         except:
             print("Connection Failed")
@@ -124,12 +126,16 @@ def generateMap():
     result = requests.post(huburl+"/saveChunks", json=obj)
     
     #SEND DATA TO TIME KEEPER
+    print("getting startTime..")
     starttime = datetime.now()
+    print("getting map info..")
     data = []
     data.append({"mapID":mapID,"mapSize":rules["numberOfTiles"],"chunkCount":rules["numberOfParts"],"workerCount":rules["numberOfWorkers"],"startTime":starttime,"endTime":None,"totalDuration":None})        
     obj = json.dumps(data)
+    print("sending data to timekeeper..")
     result = requests.post(timekeeperurl+"/saveMapTime", json=obj)
-    
+    print("done.")
+    print("")
     return mapID
         
         
