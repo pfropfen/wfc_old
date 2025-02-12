@@ -20,7 +20,19 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: standard
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: timedb-storage
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/data"  # Change this path as needed
 ---
 apiVersion: apps/v1
 kind: Deployment
