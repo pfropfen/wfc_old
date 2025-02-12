@@ -32,15 +32,24 @@ def mapGenerator():
 
 def getRules():
     # GET RULES
+    print("-> getting numberOfTiles..")
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
+    print("-> getting numberOfParts..")
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
+    print("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
+    print("-> getting numberOfWorkers..")
     numberOfWorkersResponse = request.get(managerurl+"/numberOfWorkers").json()
-
+    print("")
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
+    print("numberOfTiles: ", numberOfTiles)
     numberOfParts = numberOfPartsResponse
+    print("numberOfParts: ", numberOfParts)
     entropyTolerance = entropyToleranceResponse
+    print("entropyTolerance: ", entropyTolerance)
     numberOfWorkers = numberOfWorkersResponse
+    print("numberOfWorkers: ", numberOfWorkers)
+    print("")
     
     return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
 
@@ -102,8 +111,9 @@ def distributeMap(map, numberOfParts):
 def generateMap():
     while True:
         try:
+            print("getting rules")
             rules = getRules()
-            print("getting rules: ", rules)
+            print("rules: ", rules)
             print("")
             break
         except:
