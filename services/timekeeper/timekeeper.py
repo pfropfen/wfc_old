@@ -71,7 +71,7 @@ def updateMapTime(mapID, endTime):
         database.commit()
         print(dbCursor.rowcount)
         print("maptime updated")
-    else
+    else:
         print("row not found")
     database.disconnect()
     return "done"
