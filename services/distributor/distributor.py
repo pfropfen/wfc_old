@@ -6,7 +6,7 @@ import uuid
 import json
 import time
 from datetime import datetime
-import logger
+import logging
 
 
 app = Flask(__name__)
