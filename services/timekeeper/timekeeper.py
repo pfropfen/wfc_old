@@ -48,7 +48,7 @@ def saveMapTime():
     dbCursor = database.cursor()
     data = json.loads(request.json)
     starttime = datetime.fromisoformat(data["startTime"])
-    valuesToInsert = (data["mapID"], data["mapSize"], data["chunkCount"], data["workerCount"], data["startTime"], data["endTime"], data["totalDuration"])
+    valuesToInsert = (data["mapID"], data["mapSize"], data["chunkCount"], data["workerCount"], starttime, data["endTime"], data["totalDuration"])
     dbCursor.execute(sqlMapInsert, valuesToInsert)
     database.commit()
     print(dbCursor.rowcount)
