@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 huburl = "http://wfchub:5002"
 managerurl = "http://wfcmanager:5000"
-timekeeperurl = "http://timekeeper:6002"
+timekeeperurl = "http://wfctimekeeper:6002"
 
 @app.route("/")
 def showHome():
