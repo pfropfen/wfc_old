@@ -2,7 +2,7 @@
 ADDR=pfropfen
 VER=latest
 SERVICE=$1
-IMAGE="img",$1
+IMAGE="img$1"
 
 sudo docker image rm $IMAGE
 sudo docker build -t $IMAGE ./services/$SERVICE

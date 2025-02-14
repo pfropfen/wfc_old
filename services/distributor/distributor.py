@@ -139,6 +139,7 @@ def generateMap():
     #SEND DATA TO TIME KEEPER
     print("getting startTime..")
     starttime = datetime.now()
+    starttime = starttime.isoformat()
     print("getting map info..")
     data = []
     data.append({"mapID":mapID,"mapSize":rules["numberOfTiles"],"chunkCount":rules["numberOfParts"],"workerCount":rules["numberOfWorkers"],"startTime":starttime,"endTime":None,"totalDuration":None})        

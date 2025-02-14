@@ -47,6 +47,7 @@ def saveMapTime():
     database = mysql.connector.connect(host=timedbhost, database="times", user="root", password="root")
     dbCursor = database.cursor()
     data = json.loads(request.json)
+    starttime = datetime.fromisoformat(data["startTime"])
     valuesToInsert = (data["mapID"], data["mapSize"], data["chunkCount"], data["workerCount"], data["startTime"], data["endTime"], data["totalDuration"])
     dbCursor.execute(sqlMapInsert, valuesToInsert)
     database.commit()
