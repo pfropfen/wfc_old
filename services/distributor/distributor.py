@@ -6,6 +6,7 @@ import uuid
 import json
 import time
 from datetime import datetime
+import logger
 
 
 app = Flask(__name__)
@@ -32,24 +33,24 @@ def mapGenerator():
 
 def getRules():
     # GET RULES
-    print("-> getting numberOfTiles..")
+    app.logger.debug("-> getting numberOfTiles..")
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
-    print("-> getting numberOfParts..")
+    app.logger.debug("-> getting numberOfParts..")
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
-    print("-> getting entropyTolerance..")
+    app.logger.debug("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
-    print("-> getting numberOfWorkers..")
+    app.logger.debug("-> getting numberOfWorkers..")
     numberOfWorkersResponse = request.get(managerurl+"/numberOfWorkers").json()
-    print("")
+    app.logger.debug("")
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
-    print("numberOfTiles: ", numberOfTiles)
+    app.logger.debug("numberOfTiles: ", numberOfTiles)
     numberOfParts = numberOfPartsResponse
-    print("numberOfParts: ", numberOfParts)
+    app.logger.debug("numberOfParts: ", numberOfParts)
     entropyTolerance = entropyToleranceResponse
-    print("entropyTolerance: ", entropyTolerance)
+    app.logger.debug("entropyTolerance: ", entropyTolerance)
     numberOfWorkers = numberOfWorkersResponse
-    print("numberOfWorkers: ", numberOfWorkers)
-    print("")
+    app.logger.debug("numberOfWorkers: ", numberOfWorkers)
+    app.logger.debug("")
     
     return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
 
