@@ -40,7 +40,7 @@ def getRules():
     app.logger.debug("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
     app.logger.debug("-> getting numberOfWorkers..")
-    numberOfWorkersResponse = request.get(managerurl+"/numberOfWorkers").json()
+    numberOfWorkersResponse = requests.get(managerurl+"/numberOfWorkers").json()
     app.logger.debug("")
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
     app.logger.debug("numberOfTiles: ", numberOfTiles)
