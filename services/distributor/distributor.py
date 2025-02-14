@@ -111,7 +111,7 @@ def distributeMap(map, numberOfParts):
 def generateMap():
     while True:
         try:
-            print("getting rules")
+            app.logger.info("getting rules")
             rules = getRules()
             print("rules: ", rules)
             print("")
