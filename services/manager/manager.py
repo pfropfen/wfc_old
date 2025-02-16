@@ -1,12 +1,31 @@
 import pandas as pd
 import flask
-import logging
+#import logging
 
 app = flask.Flask(__name__)
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
-numberOfTiles = (0,0)
+#numberOfTiles = (0,0)
+
+# MANAGER
+
+
+
+# READ RULES
+data = pd.read_excel("rules.xlsx", usecols="B")
+
+numberOfTiles = (int(data.values[0][0]),int(data.values[1][0]))
+numberOfParts = int(data.values[2][0])
+entropyTolerance = int(data.values[3][0])
+numberOfWorkers = int(data.values[4][0])
+
+#app.logger.debug("numberOfTiles: "+str(numberOfTiles))
+#app.logger.debug("numberOfParts: "+str(numberOfParts))
+#app.logger.debug("entropyTolerance: "+str(entropyTolerance))
+#app.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
+
+
 @app.route("/")
 def showRules():
     return flask.jsonify({"numberOfTiles: ": numberOfTiles, "numberOfParts: ": numberOfParts, "entropyTolerance: ": entropyTolerance, "numberOfWorkers: ": numberOfWorkers})
@@ -32,23 +51,6 @@ def getRestrictions():
     return flask.jsonify((tileCompatibilityList,tileCompatibilityLookUpTable,binaryLookUpTable))
 
 
-
-# MANAGER
-
-
-
-# READ RULES
-data = pd.read_excel("rules.xlsx", usecols="B")
-
-numberOfTiles = (int(data.values[0][0]),int(data.values[1][0]))
-numberOfParts = int(data.values[2][0])
-entropyTolerance = int(data.values[3][0])
-numberOfWorkers = int(data.values[4][0])
-
-app.logger.debug("numberOfTiles: "+str(numberOfTiles))
-app.logger.debug("numberOfParts: "+str(numberOfParts))
-app.logger.debug("entropyTolerance: "+str(entropyTolerance))
-app.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
 
 # WAVE FUNCTION TILE LOOKUP TABLE
 data = pd.read_excel("restrictions.xlsx", usecols="AI")
