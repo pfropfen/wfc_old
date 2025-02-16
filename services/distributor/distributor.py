@@ -30,7 +30,7 @@ def mapGenerator():
         return render_template('distributor.html')
     
 
-
+print
 
 
 def getRules():
@@ -45,13 +45,13 @@ def getRules():
     numberOfWorkersResponse = requests.get(managerurl+"/numberOfWorkers").json()
     app.logger.debug("")
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
-    app.logger.debug("numberOfTiles: ", numberOfTiles)
+    app.logger.debug("numberOfTiles: "+numberOfTiles)
     numberOfParts = numberOfPartsResponse
-    app.logger.debug("numberOfParts: ", numberOfParts)
+    app.logger.debug("numberOfParts: "+numberOfParts)
     entropyTolerance = entropyToleranceResponse
-    app.logger.debug("entropyTolerance: ", entropyTolerance)
+    app.logger.debug("entropyTolerance: "+entropyTolerance)
     numberOfWorkers = numberOfWorkersResponse
-    app.logger.debug("numberOfWorkers: ", numberOfWorkers)
+    app.logger.debug("numberOfWorkers: "+numberOfWorkers)
     app.logger.debug("")
     
     return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
