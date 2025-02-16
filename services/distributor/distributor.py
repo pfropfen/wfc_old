@@ -11,6 +11,8 @@ import logging
 
 app = Flask(__name__)
 
+logging.basicConfig(level=logging.DEBUG)
+
 huburl = "http://wfchub:5002"
 managerurl = "http://wfcmanager:5000"
 timekeeperurl = "http://wfctimekeeper:6002"
@@ -112,7 +114,7 @@ def distributeMap(map, numberOfParts):
 def generateMap():
     while True:
         try:
-            app.logger.info("getting rules")
+            app.logger.debug("getting rules")
             rules = getRules()
             print("rules: ", rules)
             print("")
@@ -120,6 +122,9 @@ def generateMap():
         except:
             print("Connection Failed")
             time.sleep(60)
+    print("print -> connection success")
+    print("printflush -> connection success",flush=True)
+    app.logger.debug("logger -> connection success")
     wave.numberOfTiles = rules["numberOfTiles"]
     wave.entropyTolerance = rules["entropyTolerance"]
     fullMap = setMap(rules["numberOfTiles"])
