@@ -1,7 +1,10 @@
 import pandas as pd
 import flask
+import logging
 
 app = flask.Flask(__name__)
+
+logging.basicConfig(level=logging.DEBUG)
 
 numberOfTiles = (0,0)
 @app.route("/")
@@ -42,7 +45,10 @@ numberOfParts = int(data.values[2][0])
 entropyTolerance = int(data.values[3][0])
 numberOfWorkers = int(data.values[4][0])
 
-
+app.logger.debug("numberOfTiles: "+numberOfTiles)
+app.logger.debug("numberOfParts: "+numberOfParts)
+app.logger.debug("entropyTolerance: "+entropyTolerance)
+app.logger.debug("numberOfWorkers: "+numberOfWorkers)
 
 # WAVE FUNCTION TILE LOOKUP TABLE
 data = pd.read_excel("restrictions.xlsx", usecols="AI")

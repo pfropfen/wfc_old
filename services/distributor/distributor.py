@@ -37,25 +37,24 @@ def getRules():
     # GET RULES
     app.logger.debug("-> getting numberOfTiles..")
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
+    app.logger.debug("numberOfTiles: "+numberOfTiles)
     app.logger.debug("-> getting numberOfParts..")
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
+    app.logger.debug("numberOfParts: "+numberOfParts)
     app.logger.debug("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
+    app.logger.debug("entropyTolerance: "+entropyTolerance)
     app.logger.debug("-> getting numberOfWorkers..")
     numberOfWorkersResponse = requests.get(managerurl+"/numberOfWorkers").json()
-    app.logger.debug("")
-    numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
-    app.logger.debug("numberOfTiles: "+numberOfTiles)
-    numberOfParts = numberOfPartsResponse
-    app.logger.debug("numberOfParts: "+numberOfParts)
-    entropyTolerance = entropyToleranceResponse
-    app.logger.debug("entropyTolerance: "+entropyTolerance)
-    numberOfWorkers = numberOfWorkersResponse
     app.logger.debug("numberOfWorkers: "+numberOfWorkers)
-    app.logger.debug("")
+    
+    numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
+    numberOfParts = numberOfPartsResponse
+    entropyTolerance = entropyToleranceResponse
+    numberOfWorkers = numberOfWorkersResponse
+    
     
     return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
-
 
 
 def setMap(t):
