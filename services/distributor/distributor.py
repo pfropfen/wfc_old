@@ -30,23 +30,20 @@ def mapGenerator():
         return render_template('distributor.html')
     
 
-print
-
-
 def getRules():
     # GET RULES
     app.logger.debug("-> getting numberOfTiles..")
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
-    app.logger.debug("numberOfTiles: "+numberOfTiles)
+    app.logger.debug("numberOfTiles: "+str(numberOfTiles))
     app.logger.debug("-> getting numberOfParts..")
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
-    app.logger.debug("numberOfParts: "+numberOfParts)
+    app.logger.debug("numberOfParts: "+str(numberOfParts))
     app.logger.debug("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
-    app.logger.debug("entropyTolerance: "+entropyTolerance)
+    app.logger.debug("entropyTolerance: "+str(entropyTolerance))
     app.logger.debug("-> getting numberOfWorkers..")
     numberOfWorkersResponse = requests.get(managerurl+"/numberOfWorkers").json()
-    app.logger.debug("numberOfWorkers: "+numberOfWorkers)
+    app.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
     
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
     numberOfParts = numberOfPartsResponse
@@ -121,9 +118,7 @@ def generateMap():
         except:
             print("Connection Failed")
             time.sleep(60)
-    print("print -> connection success")
-    print("printflush -> connection success",flush=True)
-    app.logger.debug("logger -> connection success")
+    app.logger.debug("connection success")
     wave.numberOfTiles = rules["numberOfTiles"]
     wave.entropyTolerance = rules["entropyTolerance"]
     fullMap = setMap(rules["numberOfTiles"])

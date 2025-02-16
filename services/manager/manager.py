@@ -45,10 +45,10 @@ numberOfParts = int(data.values[2][0])
 entropyTolerance = int(data.values[3][0])
 numberOfWorkers = int(data.values[4][0])
 
-app.logger.debug("numberOfTiles: "+numberOfTiles)
-app.logger.debug("numberOfParts: "+numberOfParts)
-app.logger.debug("entropyTolerance: "+entropyTolerance)
-app.logger.debug("numberOfWorkers: "+numberOfWorkers)
+app.logger.debug("numberOfTiles: "+str(numberOfTiles))
+app.logger.debug("numberOfParts: "+str(numberOfParts))
+app.logger.debug("entropyTolerance: "+str(entropyTolerance))
+app.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
 
 # WAVE FUNCTION TILE LOOKUP TABLE
 data = pd.read_excel("restrictions.xlsx", usecols="AI")
