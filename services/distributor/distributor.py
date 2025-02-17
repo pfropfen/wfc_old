@@ -35,28 +35,32 @@ def getRules():
     #logging.debug("-> getting numberOfTiles..")
     print("-> getting numberOfTiles..")
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
+    numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
     #logging.debug("numberOfTiles: "+str(numberOfTiles))
     print("numberOfTiles: ", numberOfTiles)
     #logging.debug("-> getting numberOfParts..")
     print("-> getting numberOfParts..")
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
+    numberOfParts = numberOfPartsResponse
     #logging.debug("numberOfParts: "+str(numberOfParts))
     print("numberOfParts: ", numberOfParts)
     #logging.debug("-> getting entropyTolerance..")
     print("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
+    entropyTolerance = entropyToleranceResponse
     #logging.debug("entropyTolerance: "+str(entropyTolerance))
     print("entropyTolerance: ", entropyTolerance)
     #logging.debug("-> getting numberOfWorkers..")
     print("-> getting numberOfWorkers..")
     numberOfWorkersResponse = requests.get(managerurl+"/numberOfWorkers").json()
+    numberOfWorkers = numberOfWorkersResponse
     #logging.debug("numberOfWorkers: "+str(numberOfWorkers))
     print("numberOfWorkers: ", numberOfWorkers)
 
-    numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
-    numberOfParts = numberOfPartsResponse
-    entropyTolerance = entropyToleranceResponse
-    numberOfWorkers = numberOfWorkersResponse
+    
+    
+    
+    
     
     
     return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
