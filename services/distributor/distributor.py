@@ -32,18 +32,18 @@ def mapGenerator():
 
 def getRules():
     # GET RULES
-    app.logger.debug("-> getting numberOfTiles..")
+    logging.debug("-> getting numberOfTiles..")
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
-    app.logger.debug("numberOfTiles: "+str(numberOfTiles))
-    app.logger.debug("-> getting numberOfParts..")
+    logging.debug("numberOfTiles: "+str(numberOfTiles))
+    logging.debug("-> getting numberOfParts..")
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
-    app.logger.debug("numberOfParts: "+str(numberOfParts))
-    app.logger.debug("-> getting entropyTolerance..")
+    logging.debug("numberOfParts: "+str(numberOfParts))
+    logging.debug("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
-    app.logger.debug("entropyTolerance: "+str(entropyTolerance))
-    app.logger.debug("-> getting numberOfWorkers..")
+    logging.debug("entropyTolerance: "+str(entropyTolerance))
+    logging.debug("-> getting numberOfWorkers..")
     numberOfWorkersResponse = requests.get(managerurl+"/numberOfWorkers").json()
-    app.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
+    logging.debug("numberOfWorkers: "+str(numberOfWorkers))
     
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
     numberOfParts = numberOfPartsResponse
@@ -110,7 +110,7 @@ def distributeMap(map, numberOfParts):
 def generateMap():
     while True:
         try:
-            app.logger.debug("getting rules")
+            logging.debug("getting rules")
             rules = getRules()
             print("rules: ", rules)
             print("")
@@ -118,7 +118,7 @@ def generateMap():
         except:
             print("Connection Failed")
             time.sleep(60)
-    app.logger.debug("connection success")
+    logging.debug("connection success")
     wave.numberOfTiles = rules["numberOfTiles"]
     wave.entropyTolerance = rules["entropyTolerance"]
     fullMap = setMap(rules["numberOfTiles"])
