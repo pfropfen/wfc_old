@@ -9,7 +9,7 @@ from datetime import datetime
 # GLOBAL VARIABLES
 timedbhost = "timedb"
 dbhost = "wfcdb"
-sqlMapInsert = "INSERT INTO mapTimes (mapID, mapSize, chunkCount, workerCount, startTime, endTime, totalDuration) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+sqlMapInsert = "INSERT INTO mapTimes (mapID, mapSize, chunkCount, numberOfWorkers, startTime, endTime, totalDuration) VALUES (%s, %s, %s, %s, %s, %s, %s);"
 sqlChunkInsert = "INSERT INTO chunkTimes (mapID, chunkID, startTime, endTime, chunkDuration) VALUES (%s, %s, %s, %s, %s);"
 sqlGetMapStartTime = "SELECT startTime FROM mapTimes WHERE mapID = %s"
 sqlUpdate = "UPDATE mapTimes SET endTime = %s, totalDuration = %s WHERE mapID = %s" 
@@ -48,7 +48,7 @@ def saveMapTime():
     dbCursor = database.cursor()
     data = json.loads(request.json)
     starttime = datetime.fromisoformat(data["startTime"])
-    valuesToInsert = (data["mapID"], data["mapSize"], data["chunkCount"], data["workerCount"], starttime, data["endTime"], data["totalDuration"])
+    valuesToInsert = (data["mapID"], data["mapSize"], data["chunkCount"], data["numberOfWorkers"], starttime, data["endTime"], data["totalDuration"])
     dbCursor.execute(sqlMapInsert, valuesToInsert)
     database.commit()
     print(dbCursor.rowcount)
@@ -99,10 +99,10 @@ def saveChunkTime():
 
         lastChunkEndTime = 0
         for endTime in resultChunkEndTimes:
-            if endtime[0] > lastChunkEndTime:
-                lastChunkEndTime = endtime[0]
+            if endTime[0] > lastChunkEndTime:
+                lastChunkEndTime = endTime[0]
         
         database.disconnect()
-        updateMapTime(data[mapID], lastChunkEndTime)
+        updateMapTime(data["mapID"], lastChunkEndTime)
         
     return "done"

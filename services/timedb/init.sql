@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS mapTimes (
 	mapID VARCHAR(36),
 	mapSize INT,
 	chunkCount INT,
-	workerCount INT,
+	numberOfWorkers INT,
 	startTime TIMESTAMP,
 	endTime TIMESTAMP,
 	totalDuration INT,
