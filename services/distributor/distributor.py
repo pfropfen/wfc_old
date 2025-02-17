@@ -57,12 +57,6 @@ def getRules():
     #logging.debug("numberOfWorkers: "+str(numberOfWorkers))
     print("numberOfWorkers: ", numberOfWorkers)
 
-    
-    
-    
-    
-    
-    
     return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
 
 
@@ -154,9 +148,9 @@ def generateMap():
     starttime = datetime.now()
     starttime = starttime.isoformat()
     print("getting map info..")
-    data = []
-    data.append({"mapID":mapID,"mapSize":rules["numberOfTiles"],"chunkCount":rules["numberOfParts"],"workerCount":rules["numberOfWorkers"],"startTime":starttime,"endTime":None,"totalDuration":None})        
-    obj = json.dumps(data)
+    tdata = []
+    tdata.append({"mapID":mapID,"mapSize":rules["numberOfTiles"],"chunkCount":rules["numberOfParts"],"workerCount":rules["numberOfWorkers"],"startTime":starttime,"endTime":None,"totalDuration":None})        
+    obj = json.dumps(tdata)
     print("sending data to timekeeper..")
     result = requests.post(timekeeperurl+"/saveMapTime", json=obj)
     print("done.")
