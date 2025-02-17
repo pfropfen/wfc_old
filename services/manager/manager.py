@@ -20,10 +20,14 @@ numberOfParts = int(data.values[2][0])
 entropyTolerance = int(data.values[3][0])
 numberOfWorkers = int(data.values[4][0])
 
-#app.logger.debug("numberOfTiles: "+str(numberOfTiles))
-#app.logger.debug("numberOfParts: "+str(numberOfParts))
-#app.logger.debug("entropyTolerance: "+str(entropyTolerance))
-#app.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
+#logging.logger.debug("numberOfTiles: "+str(numberOfTiles))
+#logging.logger.debug("numberOfParts: "+str(numberOfParts))
+#logging.logger.debug("entropyTolerance: "+str(entropyTolerance))
+#logging.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
+print("numberOfTiles: ", numberOfTiles)
+print("numberOfParts: ", numberOfParts)
+print("entropyTolerance: ", entropyTolerance)
+print("numberOfWorkers: ", numberOfWorkers)
 
 
 @app.route("/")

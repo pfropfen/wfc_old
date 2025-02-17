@@ -6,12 +6,12 @@ import uuid
 import json
 import time
 from datetime import datetime
-import logging
+#import logging
 
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 huburl = "http://wfchub:5002"
 managerurl = "http://wfcmanager:5000"
@@ -32,19 +32,27 @@ def mapGenerator():
 
 def getRules():
     # GET RULES
-    logging.debug("-> getting numberOfTiles..")
+    #logging.debug("-> getting numberOfTiles..")
+    print("-> getting numberOfTiles..")
     numberOfTilesResponse = requests.get(managerurl+"/numberOfTiles").json()
-    logging.debug("numberOfTiles: "+str(numberOfTiles))
-    logging.debug("-> getting numberOfParts..")
+    #logging.debug("numberOfTiles: "+str(numberOfTiles))
+    print("numberOfTiles: ", numberOfTiles)
+    #logging.debug("-> getting numberOfParts..")
+    print("-> getting numberOfParts..")
     numberOfPartsResponse = requests.get(managerurl+"/numberOfParts").json()
-    logging.debug("numberOfParts: "+str(numberOfParts))
-    logging.debug("-> getting entropyTolerance..")
+    #logging.debug("numberOfParts: "+str(numberOfParts))
+    print("numberOfParts: ", numberOfParts)
+    #logging.debug("-> getting entropyTolerance..")
+    print("-> getting entropyTolerance..")
     entropyToleranceResponse = requests.get(managerurl+"/entropyTolerance").json()
-    logging.debug("entropyTolerance: "+str(entropyTolerance))
-    logging.debug("-> getting numberOfWorkers..")
+    #logging.debug("entropyTolerance: "+str(entropyTolerance))
+    print("entropyTolerance: ", entropyTolerance)
+    #logging.debug("-> getting numberOfWorkers..")
+    print("-> getting numberOfWorkers..")
     numberOfWorkersResponse = requests.get(managerurl+"/numberOfWorkers").json()
-    logging.debug("numberOfWorkers: "+str(numberOfWorkers))
-    
+    #logging.debug("numberOfWorkers: "+str(numberOfWorkers))
+    print("numberOfWorkers: ", numberOfWorkers)
+
     numberOfTiles = (numberOfTilesResponse[0],numberOfTilesResponse[1])
     numberOfParts = numberOfPartsResponse
     entropyTolerance = entropyToleranceResponse
@@ -110,7 +118,8 @@ def distributeMap(map, numberOfParts):
 def generateMap():
     while True:
         try:
-            logging.debug("getting rules")
+            #logging.debug("getting rules")
+            print("getting rules")
             rules = getRules()
             print("rules: ", rules)
             print("")
@@ -118,7 +127,8 @@ def generateMap():
         except:
             print("Connection Failed")
             time.sleep(60)
-    logging.debug("connection success")
+    #logging.debug("connection success")
+    print("connection success")
     wave.numberOfTiles = rules["numberOfTiles"]
     wave.entropyTolerance = rules["entropyTolerance"]
     fullMap = setMap(rules["numberOfTiles"])
