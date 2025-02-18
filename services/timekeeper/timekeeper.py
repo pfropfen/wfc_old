@@ -65,7 +65,7 @@ def updateMapTime(mapID, endTime):
     valuesToFetch = (mapID,)
     dbCursor.execute(sqlGetMapStartTime, valuesToFetch)
     row = dbCursor.fetchone()
-    if row:
+    if row is not None:
         totalDuration = int((endTime-row[0]).total_seconds()*1000)
         valuesToUpdate = (endTime, totalDuration, mapID)
         dbCursor.execute(sqlUpdate, valuesToUpdate)
