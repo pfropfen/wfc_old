@@ -115,16 +115,16 @@ def distributeMap(map, numberOfParts):
 
 def generateMap():
     while True:
-        #try:
+        try:
         #logging.debug("getting rules")
-        print("getting rules")
-        rules = getRules()
-        print("rules: ", rules)
-        print("")
-        break
-        #except:
-            #print("Connection Failed")
-            #time.sleep(60)
+            print("getting rules")
+            rules = getRules()
+            print("rules: ", rules)
+            print("")
+            break
+        except:
+            print("Connection Failed")
+            time.sleep(60)
     #logging.debug("connection success")
     print("connection success")
     wave.numberOfTiles = rules["numberOfTiles"]
