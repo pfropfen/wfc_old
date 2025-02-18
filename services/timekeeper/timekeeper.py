@@ -30,7 +30,7 @@ def isMapComplete(ID):
     dbCursor = database.cursor()
     
     dbCursor.execute(sqlCheckMapByID, (str(ID),))
-    result = dbCursor.fetch()
+    result = dbCursor.fetchall()
     print("RESULT: ", result)
     database.disconnect()
     
@@ -93,7 +93,7 @@ def saveChunkTime():
         database = mysql.connector.connect(host=timedbhost, database="times", user="root", password="root")
         dbCursor = database.cursor()
         dbCursor.execute(sqlGetChunkEndTimes, (data["mapID"],))
-        resultChunkEndTimes = dbCursor.fetch()
+        resultChunkEndTimes = dbCursor.fetchall()
         print("EndTimes: ", resultChunkEndTimes)
         print("")
 
