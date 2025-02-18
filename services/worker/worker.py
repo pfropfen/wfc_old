@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 huburl = "http://wfchub:5002"
-timekeeperurl = "http://timekeeper:6002"
+timekeeperurl = "http://wfctimekeeper:6002"
 rabbithost = "wfcrabbit"
 
 # RABBITMQ CONNECTION
