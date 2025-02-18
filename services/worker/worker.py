@@ -59,7 +59,7 @@ def callback(ch, method, properties, body):
     
     endTime = datetime.now()
     # calculate chunkDuration
-    chunkDuration = endTime - startTime
+    chunkDuration = int((endTime - startTime).total_seconds()*1000)
     # send chunk times to timekeeper
     sendChunkTimes(mapID, chunkID, startTime, endTime, chunkDuration)
     ch.basic_ack(delivery_tag=method.delivery_tag)

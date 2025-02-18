@@ -66,7 +66,7 @@ def updateMapTime(mapID, endTime):
     dbCursor.execute(sqlGetMapStartTime, valuesToFetch)
     row = dbCursor.fetchone()
     if row:
-        totalDuration = endTime-row[0]
+        totalDuration = int((endTime-row[0]).total_seconds()*1000)
         valuesToUpdate = (endTime, totalDuration, mapID)
         dbCursor.execute(sqlUpdate, valuesToUpdate)
         database.commit()
