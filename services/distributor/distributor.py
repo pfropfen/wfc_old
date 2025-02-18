@@ -149,7 +149,7 @@ def generateMap():
     startTime = datetime.now()
     startTime = startTime.isoformat()
     print("getting map info..")
-    tdata = {"mapID":mapID,"mapSize":rules["numberOfTiles"],"chunkCount":rules["numberOfParts"],"numberOfWorkers":rules["numberOfWorkers"],"startTime":startTime,"endTime":None,"totalDuration":None}       
+    tdata = {"mapID":mapID,"mapSize":rules["numberOfTiles"][0],"chunkCount":rules["numberOfParts"],"numberOfWorkers":rules["numberOfWorkers"],"startTime":startTime,"endTime":None,"totalDuration":None}       
     tobj = json.dumps(tdata)
     print("TIME OBJECT CONTENT: ", tobj)
     print("sending data to timekeeper..")
