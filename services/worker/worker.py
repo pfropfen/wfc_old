@@ -20,7 +20,7 @@ channel.queue_declare(queue='maptickets', durable=True)
 
 def sendChunkTimes(mapID, chunkID, startTime, endTime, chunkDuration):
     print("Sending Times to Time Keeper...")
-    result = requests.post(timekeeperurl+"/saveChunkTime", json = json.dumps({"mapID":mapID, "chunkID":chunkID, "startTime":startTime, "endTime":endTime, "chunkDuration":chunkDuration}))
+    result = requests.post(timekeeperurl+"/saveChunkTime", json = json.dumps({"mapID":mapID, "chunkID":chunkID, "startTime":startTime.isoformat(), "endTime":endTime.isoformat(), "chunkDuration":chunkDuration}))
     print("Result: ", result)
     print("") 
     print("Done")
@@ -40,7 +40,8 @@ def callback(ch, method, properties, body):
     print("CHUNK CONTENT: ", chunk)
     print("CHUNK5 CONTENT: ", chunk[5])
     mapdata = json.loads(chunk[5])
-    
+
+
     startTime = datetime.now()
     wave.map = mapdata
     print("[set entropy tolerance]")
