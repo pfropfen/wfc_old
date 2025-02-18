@@ -141,6 +141,7 @@ def generateMap():
         for y in range(0,len(mapChunks)):
             data.append({"mapID":mapID,"chunkID":str(uuid.uuid4()),"locX":x,"locY":y,"entropyTolerance":rules["entropyTolerance"],"content":mapChunks[y][x]})
     obj = json.dumps(data)
+    print("OBJECT CONTENT: ", obj)
     result = requests.post(huburl+"/saveChunks", json=obj)
     
     #SEND DATA TO TIME KEEPER
@@ -150,9 +151,10 @@ def generateMap():
     print("getting map info..")
     tdata = []
     tdata.append({"mapID":mapID,"mapSize":rules["numberOfTiles"],"chunkCount":rules["numberOfParts"],"numberOfWorkers":rules["numberOfWorkers"],"startTime":starttime,"endTime":None,"totalDuration":None})        
-    obj = json.dumps(tdata)
+    tobj = json.dumps(tdata)
+    print("TIME OBJECT CONTENT: ", tobj)
     print("sending data to timekeeper..")
-    result = requests.post(timekeeperurl+"/saveMapTime", json=obj)
+    result = requests.post(timekeeperurl+"/saveMapTime", json=tobj)
     print("done.")
     print("")
     return mapID
