@@ -5,8 +5,13 @@ metadata:
   labels:
     app: timedb
 spec:
+  type: NodePort
   ports:
   - port: 3306
+    name: dtimedbport
+    protocol: TCP
+    targetPort: 3306
+    nodePort: 33006
   selector:
     app: timedb
 ---
