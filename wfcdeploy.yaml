@@ -11,7 +11,7 @@ spec:
     name: dtimedbport
     protocol: TCP
     targetPort: 3306
-    nodePort: 33006
+    nodePort: 31006
   selector:
     app: timedb
 ---
