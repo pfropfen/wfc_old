@@ -48,6 +48,8 @@ spec:
       labels:
         app: timedb
     spec:
+      nodeSelector:
+        node-role.kubernetes.io/control-plane
       volumes:
         - name: timedb-storage
           persistentVolumeClaim:
@@ -72,12 +74,6 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: timedb-storage
-  nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          matchExpressions:
-            - key: node-role.kubernetes.io/control-plane
-              operator: Exists
 ---
 apiVersion: v1
 kind: Service
