@@ -97,7 +97,7 @@ def saveChunkTime():
         print("EndTimes: ", resultChunkEndTimes)
         print("")
 
-        lastChunkEndTime = datetime.min()
+        lastChunkEndTime = datetime.min
         for endTime in resultChunkEndTimes:
             if endTime[0] > lastChunkEndTime:
                 lastChunkEndTime = endTime[0]
