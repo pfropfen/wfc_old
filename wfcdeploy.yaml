@@ -32,10 +32,10 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: "/mnt/data"  # Change this path as needed
+    path: "/mnt/data"  # volume location
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: timedb-deployment
 spec:
@@ -48,8 +48,6 @@ spec:
       labels:
         app: timedb
     spec:
-      nodeSelector:
-        node-role.kubernetes.io/control-plane: ""
       volumes:
         - name: timedb-storage
           persistentVolumeClaim:
