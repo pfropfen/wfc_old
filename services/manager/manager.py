@@ -1,5 +1,4 @@
 import pandas as pd
-import requests
 from flask import Flask, request, render_template, redirect
 #import logging
 
