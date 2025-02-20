@@ -39,13 +39,13 @@ print("numberOfWorkers: ", app.config["numberOfWorkers"])
 def showHome():
     if request.method == 'POST':
         # aktualisierten Werte verarbeiten
-        app.config["numberOfTiles"] = request.form.get('var1')
-        app.config["numberOfParts"] = request.form.get('var2')
-        app.config["entropyTolerance"] = request.form.get('var3')
-        app.config["numberOfWorkers"] = request.form.get('var4')
+        app.config["numberOfTiles"] = (int(request.form.get('var1')),int(request.form.get('var1')))
+        app.config["numberOfParts"] = int(request.form.get('var2'))
+        app.config["entropyTolerance"] = int(request.form.get('var3'))
+        app.config["numberOfWorkers"] = int(request.form.get('var4'))
         # Werte speichern oder weiterverarbeiten
         return render_template('manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
-    return render_template('manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
+    return render_template('manager.html', var1=app.config["numberOfTiles"][0], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
 
 
 @app.route("/numberOfTiles")
