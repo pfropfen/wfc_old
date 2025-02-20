@@ -31,11 +31,11 @@ print("numberOfWorkers: ", app.config["numberOfWorkers"])
 
 
 
-#@app.route("/")
-#def showRules():
-    #return Flask.jsonify({"numberOfTiles: ": numberOfTiles, "numberOfParts: ": numberOfParts, "entropyTolerance: ": entropyTolerance, "numberOfWorkers: ": numberOfWorkers})
+@app.route("/")
+def showRules():
+    return Flask.jsonify({"numberOfTiles: ": (app.config["numberOfTiles"],app.config["numberOfTiles"]), "numberOfParts: ": app.config["numberOfParts"], "entropyTolerance: ": app.config["entropyTolerance"], "numberOfWorkers: ": app.config["numberOfWorkers"]})
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/setRules', methods=['GET', 'POST'])
 def showHome():
     if request.method == 'POST':
         # aktualisierten Werte verarbeiten
