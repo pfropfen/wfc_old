@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, jsonify
 #import logging
 
 app = Flask(__name__)
@@ -50,23 +50,23 @@ def showHome():
 
 @app.route("/numberOfTiles")
 def getNumberOfTiles():
-    return Flask.jsonify(numberOfTiles)
+    return jsonify(numberOfTiles)
     
 @app.route("/numberOfParts")
 def getNumberOfParts():
-    return Flask.jsonify(numberOfParts)
+    return jsonify(numberOfParts)
 
 @app.route("/entropyTolerance")
 def getEntropyTolerance():
-    return Flask.jsonify(entropyTolerance)
+    return jsonify(entropyTolerance)
     
 @app.route("/numberOfWorkers")
 def getNumberOfWorkers():
-    return Flask.jsonify(numberOfWorkers)
+    return jsonify(numberOfWorkers)
     
 @app.route("/restrictions")
 def getRestrictions():
-    return Flask.jsonify((tileCompatibilityList,tileCompatibilityLookUpTable,binaryLookUpTable))
+    return jsonify((tileCompatibilityList,tileCompatibilityLookUpTable,binaryLookUpTable))
 
 
 
