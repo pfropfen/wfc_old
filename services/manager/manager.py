@@ -45,7 +45,7 @@ def showHome():
         app.config["numberOfWorkers"] = int(request.form.get('var4'))
         # Werte speichern oder weiterverarbeiten
         return render_template('manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
-    return render_template('manager.html', var1=app.config["numberOfTiles"][0], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
+    return render_template('manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
 
 
 @app.route("/numberOfTiles")
