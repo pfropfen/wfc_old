@@ -1,15 +1,15 @@
 import pandas as pd
-import flask
+import requests
+from flask import Flask, request, render_template, redirect
 #import logging
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 #logging.basicConfig(level=logging.DEBUG)
 
 #numberOfTiles = (0,0)
 
 # MANAGER
-
 
 
 # READ RULES
@@ -30,29 +30,44 @@ print("entropyTolerance: ", entropyTolerance)
 print("numberOfWorkers: ", numberOfWorkers)
 
 
-@app.route("/")
-def showRules():
-    return flask.jsonify({"numberOfTiles: ": numberOfTiles, "numberOfParts: ": numberOfParts, "entropyTolerance: ": entropyTolerance, "numberOfWorkers: ": numberOfWorkers})
-    
+
+#@app.route("/")
+#def showRules():
+    #return Flask.jsonify({"numberOfTiles: ": numberOfTiles, "numberOfParts: ": numberOfParts, "entropyTolerance: ": entropyTolerance, "numberOfWorkers: ": numberOfWorkers})
+
+@app.route('/', methods=['GET', 'POST'])
+def showHome():
+    if request.method == 'POST':
+        # aktualisierten Werte verarbeiten
+        numberOfTiles = request.form.get('var1')
+        numberOfParts = request.form.get('var2')
+        entropyTolerance = request.form.get('var3')
+        numberOfWorkers = request.form.get('var4')
+        # Werte speichern oder weiterverarbeiten
+        return render_template('template/manager.html', var1=numberOfTiles, var2=numberOfParts, var3=entropyTolerance, var4=numberOfWorkers)
+
+    return render_template('template/manager.html', var1=numberOfTiles, var2=numberOfParts, var3=entropyTolerance, var4=numberOfWorkers)
+
+
 @app.route("/numberOfTiles")
 def getNumberOfTiles():
-    return flask.jsonify(numberOfTiles)
+    return Flask.jsonify(numberOfTiles)
     
 @app.route("/numberOfParts")
 def getNumberOfParts():
-    return flask.jsonify(numberOfParts)
+    return Flask.jsonify(numberOfParts)
 
 @app.route("/entropyTolerance")
 def getEntropyTolerance():
-    return flask.jsonify(entropyTolerance)
+    return Flask.jsonify(entropyTolerance)
     
 @app.route("/numberOfWorkers")
 def getNumberOfWorkers():
-    return flask.jsonify(numberOfWorkers)
+    return Flask.jsonify(numberOfWorkers)
     
 @app.route("/restrictions")
 def getRestrictions():
-    return flask.jsonify((tileCompatibilityList,tileCompatibilityLookUpTable,binaryLookUpTable))
+    return Flask.jsonify((tileCompatibilityList,tileCompatibilityLookUpTable,binaryLookUpTable))
 
 
 
