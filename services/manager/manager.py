@@ -14,6 +14,7 @@ app = Flask(__name__)
 # READ RULES
 data = pd.read_excel("rules.xlsx", usecols="B")
 
+
 numberOfTiles = (int(data.values[0][0]),int(data.values[1][0]))
 numberOfParts = int(data.values[2][0])
 entropyTolerance = int(data.values[3][0])
@@ -44,7 +45,10 @@ def showHome():
         numberOfWorkers = request.form.get('var4')
         # Werte speichern oder weiterverarbeiten
         return render_template('template/manager.html', var1=numberOfTiles, var2=numberOfParts, var3=entropyTolerance, var4=numberOfWorkers)
-
+    numberOfTiles = numberOfTiles
+    numberOfParts = numberOfParts
+    entropyTolerance = entropyTolerance
+    numberOfWorkers = numberOfWorkers
     return render_template('template/manager.html', var1=numberOfTiles, var2=numberOfParts, var3=entropyTolerance, var4=numberOfWorkers)
 
 
