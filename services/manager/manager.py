@@ -15,19 +15,19 @@ app = Flask(__name__)
 data = pd.read_excel("rules.xlsx", usecols="B")
 
 
-numberOfTiles = (int(data.values[0][0]),int(data.values[1][0]))
-numberOfParts = int(data.values[2][0])
-entropyTolerance = int(data.values[3][0])
-numberOfWorkers = int(data.values[4][0])
+app.config["numberOfTiles"] = (int(data.values[0][0]),int(data.values[1][0]))
+app.config["numberOfParts"] = int(data.values[2][0])
+app.config["entropyTolerance"] = int(data.values[3][0])
+app.config["numberOfWorkers"] = int(data.values[4][0])
 
 #logging.logger.debug("numberOfTiles: "+str(numberOfTiles))
 #logging.logger.debug("numberOfParts: "+str(numberOfParts))
 #logging.logger.debug("entropyTolerance: "+str(entropyTolerance))
 #logging.logger.debug("numberOfWorkers: "+str(numberOfWorkers))
-print("numberOfTiles: ", numberOfTiles)
-print("numberOfParts: ", numberOfParts)
-print("entropyTolerance: ", entropyTolerance)
-print("numberOfWorkers: ", numberOfWorkers)
+print("numberOfTiles: ", app.config["numberOfTiles"])
+print("numberOfParts: ", app.config["numberOfParts"])
+print("entropyTolerance: ", app.config["entropyTolerance"])
+print("numberOfWorkers: ", app.config["numberOfWorkers"])
 
 
 
@@ -39,34 +39,30 @@ print("numberOfWorkers: ", numberOfWorkers)
 def showHome():
     if request.method == 'POST':
         # aktualisierten Werte verarbeiten
-        numberOfTiles = request.form.get('var1')
-        numberOfParts = request.form.get('var2')
-        entropyTolerance = request.form.get('var3')
-        numberOfWorkers = request.form.get('var4')
+        app.config["numberOfTiles"] = request.form.get('var1')
+        app.config["numberOfParts"] = request.form.get('var2')
+        app.config["entropyTolerance"] = request.form.get('var3')
+        app.config["numberOfWorkers"] = request.form.get('var4')
         # Werte speichern oder weiterverarbeiten
-        return render_template('template/manager.html', var1=numberOfTiles, var2=numberOfParts, var3=entropyTolerance, var4=numberOfWorkers)
-    numberOfTiles = numberOfTiles
-    numberOfParts = numberOfParts
-    entropyTolerance = entropyTolerance
-    numberOfWorkers = numberOfWorkers
-    return render_template('template/manager.html', var1=numberOfTiles, var2=numberOfParts, var3=entropyTolerance, var4=numberOfWorkers)
+        return render_template('template/manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
+    return render_template('template/manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
 
 
 @app.route("/numberOfTiles")
 def getNumberOfTiles():
-    return jsonify(numberOfTiles)
+    return jsonify(app.config["numberOfTiles"])
     
 @app.route("/numberOfParts")
 def getNumberOfParts():
-    return jsonify(numberOfParts)
+    return jsonify(app.config["numberOfParts"])
 
 @app.route("/entropyTolerance")
 def getEntropyTolerance():
-    return jsonify(entropyTolerance)
+    return jsonify(app.config["entropyTolerance"])
     
 @app.route("/numberOfWorkers")
 def getNumberOfWorkers():
-    return jsonify(numberOfWorkers)
+    return jsonify(app.config["numberOfWorkers"])
     
 @app.route("/restrictions")
 def getRestrictions():
