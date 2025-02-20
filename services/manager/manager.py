@@ -15,7 +15,7 @@ app = Flask(__name__)
 data = pd.read_excel("rules.xlsx", usecols="B")
 
 
-app.config["numberOfTiles"] = (int(data.values[0][0]),int(data.values[1][0]))
+app.config["numberOfTiles"] = int(data.values[0][0])
 app.config["numberOfParts"] = int(data.values[2][0])
 app.config["entropyTolerance"] = int(data.values[3][0])
 app.config["numberOfWorkers"] = int(data.values[4][0])
@@ -39,7 +39,7 @@ print("numberOfWorkers: ", app.config["numberOfWorkers"])
 def showHome():
     if request.method == 'POST':
         # aktualisierten Werte verarbeiten
-        app.config["numberOfTiles"] = (int(request.form.get('var1')),int(request.form.get('var1')))
+        app.config["numberOfTiles"] = int(request.form.get('var1'))
         app.config["numberOfParts"] = int(request.form.get('var2'))
         app.config["entropyTolerance"] = int(request.form.get('var3'))
         app.config["numberOfWorkers"] = int(request.form.get('var4'))
@@ -50,7 +50,7 @@ def showHome():
 
 @app.route("/numberOfTiles")
 def getNumberOfTiles():
-    return jsonify(app.config["numberOfTiles"])
+    return jsonify((app.config["numberOfTiles"],app.config["numberOfTiles"]))
     
 @app.route("/numberOfParts")
 def getNumberOfParts():
