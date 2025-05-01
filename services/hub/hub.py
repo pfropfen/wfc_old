@@ -10,7 +10,8 @@ import pika
 # GLOBAL VARIABLES
 dbhost = "wfcdb"
 rabbithost = "wfcrabbit"
-sqlInsert = "INSERT INTO mapchunks (mapID, chunkID, locationX, locationY, entropyTolerance, content, computed) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+sqlInsert = "INSERT INTO mapchunks (mapID, chunkID, locationX, locationY, \
+             entropyTolerance, content, computed) VALUES (%s, %s, %s, %s, %s, %s, %s);"
 sqlGetByTicketID = "SELECT * FROM mapchunks WHERE chunkID = %s;"
 sqlUpdateChunk = "UPDATE mapchunks SET content = %s, computed = 1 WHERE chunkID = %s;"
 sqlMapByID = "SELECT locationX,locationY,content FROM mapchunks WHERE mapID = %s;"
@@ -33,10 +34,13 @@ def showHome():
 
 @app.route("/saveChunk", methods=["POST"])
 def saveChunk():
-    database = mysql.connector.connect(host=dbhost, database="maps", user="root", password="root")
+    database = mysql.connector.connect(host=dbhost, database="maps", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     data = json.loads(request.json)
-    valuesToInsert = (data["mapID"], data["chunkID"], data["locX"], data["locY"], data["entropyTolerance"], data["content"], False)
+    valuesToInsert = (data["mapID"], data["chunkID"], 
+                      data["locX"], data["locY"], 
+                      data["entropyTolerance"], data["content"], False)
     dbCursor.execute(sqlInsert, valuesToInsert)
     database.commit()
     print("saved chunk in db")
@@ -45,7 +49,8 @@ def saveChunk():
     
 @app.route("/updateChunkByID", methods=["POST"])
 def updateChunk():
-    database = mysql.connector.connect(host=dbhost, database="maps", user="root", password="root")
+    database = mysql.connector.connect(host=dbhost, database="maps", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     data = json.loads(request.json)
     valuesToInsert = (json.dumps(data["content"]), data["chunkID"])
@@ -63,14 +68,19 @@ def saveChunks():
     channel = connection.channel()
     channel.queue_declare(queue='maptickets', durable=True)
     # DB CONNECTION
-    database = mysql.connector.connect(host=dbhost, database="maps", user="root", password="root")
+    database = mysql.connector.connect(host=dbhost, database="maps", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     data = json.loads(request.json)
     valuesToInsert = []
     for chunk in data:
-        valuesToInsert.append((chunk["mapID"], chunk["chunkID"], chunk["locX"], chunk["locY"], chunk["entropyTolerance"], json.dumps(chunk["content"]), False))
+        valuesToInsert.append((chunk["mapID"], chunk["chunkID"], 
+                               chunk["locX"], chunk["locY"], 
+                               chunk["entropyTolerance"], json.dumps(chunk["content"]), 
+                               False))
         message = chunk["chunkID"]
-        channel.basic_publish(exchange='', routing_key='maptickets', body=message, properties=pika.BasicProperties(delivery_mode=pika.DeliveryMode.Persistent))
+        channel.basic_publish(exchange='', routing_key='maptickets', body=message, 
+                properties=pika.BasicProperties(delivery_mode=pika.DeliveryMode.Persistent))
     dbCursor.executemany(sqlInsert, valuesToInsert)
     database.commit()
     database.disconnect()
@@ -82,7 +92,8 @@ def saveChunks():
 
 @app.route("/getMapChunkByChunkID/<uuid:ID>", methods=["GET"])
 def getMapChunkByChunkID(ID):
-    database = mysql.connector.connect(host=dbhost, database="maps", user="root", password="root")
+    database = mysql.connector.connect(host=dbhost, database="maps", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     dbCursor.execute(sqlGetByTicketID, (str(ID),))
     result = dbCursor.fetchone()
@@ -91,7 +102,8 @@ def getMapChunkByChunkID(ID):
 
 @app.route("/getMapByID/<uuid:ID>", methods=["GET"])
 def getMapByID(ID):
-    database = mysql.connector.connect(host=dbhost, database="maps", user="root", password="root")
+    database = mysql.connector.connect(host=dbhost, database="maps", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     dbCursor.execute(sqlMapByID, (str(ID),))
     result = dbCursor.fetchall()
