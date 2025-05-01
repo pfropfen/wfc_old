@@ -40,12 +40,14 @@ def findLowestEntropyTile():
                     lowest = numberOfOnes(col)
                     for i in range (0,len(listOfLowest)-1):
                         if (i != len(listOfLowest)-1):
-                            listOfLowest[len(listOfLowest)-1-i] = listOfLowest[len(listOfLowest)-i-2]
+                            listOfLowest[len(listOfLowest)-1-i] = \
+                            listOfLowest[len(listOfLowest)-i-2]
                         else:
                             listOfLowest[0].clear() 
 
                     listOfLowest[0].append((x,y,col))
-                elif (numberOfOnes(col) <= lowest+entropyTolerance and numberOfOnes(col) >= lowest):
+                elif (numberOfOnes(col) <= lowest+entropyTolerance and 
+                      numberOfOnes(col) >= lowest):
 
                     listOfLowest[numberOfOnes(col)-lowest].append((x,y,col))
                     
