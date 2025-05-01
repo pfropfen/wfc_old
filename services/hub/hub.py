@@ -21,16 +21,12 @@ sqlMapByID = "SELECT locationX,locationY,content FROM mapchunks WHERE mapID = %s
 
 
 # HUB SERVICE
-
 app = Flask(__name__)
 
-
 # HUB SERVICE PATHS
-
 @app.route("/")
 def showHome():
     return "HUB SERVICE FOR SAVING MAPCHUNKS"
-
 
 @app.route("/saveChunk", methods=["POST"])
 def saveChunk():
