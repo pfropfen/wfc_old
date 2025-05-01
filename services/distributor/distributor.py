@@ -44,7 +44,8 @@ def getRules():
     numberOfWorkers = numberOfWorkersResponse
     print("numberOfWorkers: ", numberOfWorkers)
 
-    return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
+    return {"numberOfTiles":numberOfTiles, "numberOfParts":numberOfParts, 
+            "entropyTolerance":entropyTolerance, "numberOfWorkers":numberOfWorkers}
 
 
 def setMap(t):
@@ -90,7 +91,8 @@ def distributeMap(map, numberOfParts):
 
     for x in range (0,len(map[0])):
         for y in range (0,len(map)):
-            mapChunks[int(y/(len(map)/divisions))][int(x/(len(map[0])/divisions))][y%int(len(map)/divisions)][x%int(len(map[0])/divisions)] = map[y][x]
+            mapChunks[int(y/(len(map)/divisions))][int(x/(len(map[0])/divisions))][
+                      y%int(len(map)/divisions)][x%int(len(map[0])/divisions)] = map[y][x]
     return mapChunks    
 
 
@@ -121,7 +123,9 @@ def generateMap():
     print("sending chunks to hub..")
     for x in range(0,len(mapChunks[0])):
         for y in range(0,len(mapChunks)):
-            data.append({"mapID":mapID,"chunkID":str(uuid.uuid4()),"locX":x,"locY":y,"entropyTolerance":rules["entropyTolerance"],"content":mapChunks[y][x]})
+            data.append({"mapID":mapID,"chunkID":str(uuid.uuid4()),
+                         "locX":x,"locY":y,"entropyTolerance":rules["entropyTolerance"],
+                         "content":mapChunks[y][x]})
     obj = json.dumps(data)
     result = requests.post(huburl+"/saveChunks", json=obj)
     print("done.")
@@ -132,7 +136,9 @@ def generateMap():
     startTime = datetime.now()
     startTime = startTime.isoformat()
     print("getting map info..")
-    tdata = {"mapID":mapID,"mapSize":rules["numberOfTiles"][0],"chunkCount":rules["numberOfParts"],"numberOfWorkers":rules["numberOfWorkers"],"startTime":startTime,"endTime":None,"totalDuration":None}       
+    tdata = {"mapID":mapID,"mapSize":rules["numberOfTiles"][0],
+             "chunkCount":rules["numberOfParts"],"numberOfWorkers":rules["numberOfWorkers"],
+             "startTime":startTime,"endTime":None,"totalDuration":None}       
     tobj = json.dumps(tdata)
     print("sending data to timekeeper..")
     result = requests.post(timekeeperurl+"/saveMapTime", json=tobj)
