@@ -4,11 +4,13 @@
 
 alias brc='nano ~/.bashrc'
 alias psa='sudo docker ps -a'
-alias killall='sudo docker container stop $(sudo docker ps -a -q) && sudo docker container rm $(sudo docker ps -a -q)'
+alias killall='sudo docker container stop $(sudo docker ps -a -q) \
+               && sudo docker container rm $(sudo docker ps -a -q)'
 alias killimg='sudo docker image rm -f $(sudo docker image ls)'
 alias logs='sudo docker logs'
 alias slogs='sudo docker service logs'
-alias startreg='sudo docker run -d -p 9000:5000 --restart always --name registry registry:2'
+alias startreg='sudo docker run -d -p 9000:5000 --restart always \
+               --name registry registry:2'
 alias rebirth='bash rebirth.sh'
 
 
