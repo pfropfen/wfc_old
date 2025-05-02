@@ -85,8 +85,7 @@ for tile in data.values:
     tileCompatibilityLookUpTable[2**ind] = int(tile[0],2)
     ind += 1
 
-
-                                
+                               
 binaryLookUpTable = {"grass":0b000000001,
                      "wald":0b000000010,
                      "kuh":0b000000100,
