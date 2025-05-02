@@ -9,8 +9,12 @@ from datetime import datetime
 # GLOBAL VARIABLES
 timedbhost = "timedb"
 dbhost = "wfcdb"
-sqlMapInsert = "INSERT INTO mapTimes (mapID, mapSize, chunkCount, numberOfWorkers, startTime, endTime, totalDuration) VALUES (%s, %s, %s, %s, %s, %s, %s);"
-sqlChunkInsert = "INSERT INTO chunkTimes (mapID, chunkID, startTime, endTime, chunkDuration) VALUES (%s, %s, %s, %s, %s);"
+sqlMapInsert = "INSERT INTO mapTimes (" \
+               "mapID, mapSize, chunkCount, numberOfWorkers, startTime, endTime, " \
+               "totalDuration) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+sqlChunkInsert = "INSERT INTO chunkTimes (" \
+                 "mapID, chunkID, startTime, endTime, chunkDuration) " \
+                 "VALUES (%s, %s, %s, %s, %s);"
 sqlGetMapStartTime = "SELECT startTime FROM mapTimes WHERE mapID = %s"
 sqlUpdate = "UPDATE mapTimes SET endTime = %s, totalDuration = %s WHERE mapID = %s" 
 sqlCheckMapByID = "SELECT computed FROM mapchunks WHERE mapID = %s;"
@@ -28,7 +32,8 @@ def showHome():
 
 @app.route("/isMapComplete/<uuid:ID>", methods=["GET"])
 def isMapComplete(ID):
-    database = mysql.connector.connect(host=dbhost, database="maps", user="root", password="root")
+    database = mysql.connector.connect(host=dbhost, database="maps", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     
     dbCursor.execute(sqlCheckMapByID, (str(ID),))
@@ -45,11 +50,14 @@ def isMapComplete(ID):
     
 @app.route("/saveMapTime", methods=["POST"])
 def saveMapTime():
-    database = mysql.connector.connect(host=timedbhost, database="times", user="root", password="root")
+    database = mysql.connector.connect(host=timedbhost, database="times", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     data = json.loads(request.json)
     startTime = datetime.fromisoformat(data["startTime"])
-    valuesToInsert = (data["mapID"], data["mapSize"], data["chunkCount"], data["numberOfWorkers"], startTime, data["endTime"], data["totalDuration"])
+    valuesToInsert = (data["mapID"], data["mapSize"], data["chunkCount"], 
+                      data["numberOfWorkers"], startTime, data["endTime"], 
+                      data["totalDuration"])
     dbCursor.execute(sqlMapInsert, valuesToInsert)
     database.commit()
     print("saved maptime in db")
@@ -58,7 +66,8 @@ def saveMapTime():
     
     
 def updateMapTime(mapID, endTime):
-    database = mysql.connector.connect(host=timedbhost, database="times", user="root", password="root")
+    database = mysql.connector.connect(host=timedbhost, database="times", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     data = json.loads(request.json)
     
@@ -76,17 +85,22 @@ def updateMapTime(mapID, endTime):
     
 @app.route("/saveChunkTime", methods=["POST"])
 def saveChunkTime():
-    database = mysql.connector.connect(host=timedbhost, database="times", user="root", password="root")
+    database = mysql.connector.connect(host=timedbhost, database="times", 
+                                       user="root", password="root")
     dbCursor = database.cursor()
     data = json.loads(request.json)
-    valuesToInsert = (data["mapID"], data["chunkID"], datetime.fromisoformat(data["startTime"]), datetime.fromisoformat(data["endTime"]), data["chunkDuration"])
+    valuesToInsert = (data["mapID"], data["chunkID"], 
+                      datetime.fromisoformat(data["startTime"]), 
+                      datetime.fromisoformat(data["endTime"]), 
+                      data["chunkDuration"])
     dbCursor.execute(sqlChunkInsert, valuesToInsert)
     database.commit()
     print("saved chunktime in db")
     database.disconnect()
     
     if isMapComplete(data["mapID"]):
-        database = mysql.connector.connect(host=timedbhost, database="times", user="root", password="root")
+        database = mysql.connector.connect(host=timedbhost, database="times", 
+                                           user="root", password="root")
         dbCursor = database.cursor()
         dbCursor.execute(sqlGetChunkEndTimes, (data["mapID"],))
         resultChunkEndTimes = dbCursor.fetchall()
