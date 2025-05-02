@@ -18,10 +18,13 @@ EOF
 
 sudo sysctl --system
 sudo apt install curl ca-certificates apt-transport-https -y
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor
+     -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
 sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] 
+     https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | 
+     sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
 sudo apt update
 sudo apt install kubelet kubeadm kubectl -y
@@ -40,8 +43,10 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml --validate=false
-curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml -O
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/\
+                  manifests/tigera-operator.yaml --validate=false
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/\
+     custom-resources.yaml -O
 ls -l
 sed -i 's/cidr: 192\.168\.0\.0\/16/cidr: 10.10.0.0\/16/g' custom-resources.yaml
 kubectl create -f custom-resources.yaml --validate=false
