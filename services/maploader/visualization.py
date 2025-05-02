@@ -28,8 +28,10 @@ def initializeTiles(scaleValue):
     wasserImg = pygame.transform.scale(pygame.image.load("TILES/wasser.png"), scaleValue)
     fischImg = pygame.transform.scale(pygame.image.load("TILES/fisch.png"), scaleValue)
     bergImg = pygame.transform.scale(pygame.image.load("TILES/berg.png"), scaleValue)
-    bergschneeImg = pygame.transform.scale(pygame.image.load("TILES/bergschnee.png"), scaleValue)
-    schneemannImg = pygame.transform.scale(pygame.image.load("TILES/schneemann.png"), scaleValue)
+    bergschneeImg = pygame.transform.scale(pygame.image.load("TILES/bergschnee.png"), 
+                                           scaleValue)
+    schneemannImg = pygame.transform.scale(pygame.image.load("TILES/schneemann.png"), 
+                                           scaleValue)
 
 
 def selectImage(tile, scaleValue):
@@ -75,5 +77,7 @@ def showmap(mapdata):
         # RENDERING
         for y in range (0,len(mapdata[0])):
             for x in range (0,len(mapdata)):
-                screen.blit(selectImage(mapdata[y][x], scaleValue),(scaleValue[0]*x,scaleValue[1]*y))
+                screen.blit(selectImage(mapdata[y][x], scaleValue),
+                                       (scaleValue[0]*x,scaleValue[1]*y))
         pygame.display.flip()
+
