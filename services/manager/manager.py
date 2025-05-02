@@ -1,15 +1,12 @@
 import pandas as pd
 from flask import Flask, request, render_template, redirect, jsonify
 
-app = Flask(__name__)
-
 
 # MANAGER
-
+app = Flask(__name__)
 
 # READ RULES
 data = pd.read_excel("rules.xlsx", usecols="B")
-
 
 app.config["numberOfTiles"] = int(data.values[0][0])
 app.config["numberOfParts"] = int(data.values[2][0])
@@ -26,7 +23,11 @@ print("numberOfWorkers: ", app.config["numberOfWorkers"])
 
 @app.route("/")
 def showRules():
-    return Flask.jsonify({"numberOfTiles: ": (app.config["numberOfTiles"],app.config["numberOfTiles"]), "numberOfParts: ": app.config["numberOfParts"], "entropyTolerance: ": app.config["entropyTolerance"], "numberOfWorkers: ": app.config["numberOfWorkers"]})
+    return Flask.jsonify({"numberOfTiles: ": (app.config["numberOfTiles"],
+                                    app.config["numberOfTiles"]),
+                                    "numberOfParts: ": app.config["numberOfParts"],
+                                    "entropyTolerance: ": app.config["entropyTolerance"],
+                                    "numberOfWorkers: ": app.config["numberOfWorkers"]})
 
 @app.route('/setRules', methods=['GET', 'POST'])
 def showHome():
@@ -37,8 +38,16 @@ def showHome():
         app.config["entropyTolerance"] = int(request.form.get('var3'))
         app.config["numberOfWorkers"] = int(request.form.get('var4'))
         # save or process values
-        return render_template('manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
-    return render_template('manager.html', var1=app.config["numberOfTiles"], var2=app.config["numberOfParts"], var3=app.config["entropyTolerance"], var4=app.config["numberOfWorkers"])
+        return render_template('manager.html', 
+                               var1=app.config["numberOfTiles"], 
+                               var2=app.config["numberOfParts"], 
+                               var3=app.config["entropyTolerance"], 
+                               var4=app.config["numberOfWorkers"])
+    return render_template('manager.html', 
+                           var1=app.config["numberOfTiles"], 
+                           var2=app.config["numberOfParts"], 
+                           var3=app.config["entropyTolerance"], 
+                           var4=app.config["numberOfWorkers"])
 
 
 @app.route("/numberOfTiles")
