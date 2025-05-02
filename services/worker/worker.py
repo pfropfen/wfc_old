@@ -23,7 +23,11 @@ channel.queue_declare(queue='maptickets', durable=True)
 
 def sendChunkTimes(mapID, chunkID, startTime, endTime, chunkDuration):
     print("Sending Times to Time Keeper...")
-    result = requests.post(timekeeperurl+"/saveChunkTime", json = json.dumps({"mapID":mapID, "chunkID":chunkID, "startTime":startTime.isoformat(), "endTime":endTime.isoformat(), "chunkDuration":chunkDuration}))
+    result = requests.post(timekeeperurl+"/saveChunkTime", 
+                           json = json.dumps({"mapID":mapID, "chunkID":chunkID, 
+                                              "startTime":startTime.isoformat(), 
+                                              "endTime":endTime.isoformat(), 
+                                              "chunkDuration":chunkDuration}))
     print("Done")
     print("")
     
@@ -51,7 +55,9 @@ def callback(ch, method, properties, body):
             finished = wave.algorithmStep()
     print("[finished]")
     
-    result = requests.post(huburl+"/updateChunkByID", json = json.dumps({"chunkID":body.decode(),"content":wave.map}))
+    result = requests.post(huburl+"/updateChunkByID", 
+                           json = json.dumps({"chunkID":body.decode(),
+                                              "content":wave.map}))
     
     endTime = datetime.now()
     # calculate chunkDuration
