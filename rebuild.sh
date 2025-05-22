@@ -8,3 +8,4 @@ sudo docker image rm $IMAGE
 sudo docker build -t $IMAGE ./services/$SERVICE
 sudo docker tag $IMAGE $ADDR/$IMAGE:$VER
 sudo docker push $ADDR/$IMAGE:$VER
+
